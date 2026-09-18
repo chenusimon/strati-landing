@@ -1,0 +1,132 @@
+.login-page {
+  min-height: 100vh;
+  background: var(--color-bg-cream);
+  padding: 2.5rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-page__topbar {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.login-page__logo {
+  height: 56px;
+  width: auto;
+}
+
+.login-page__wordmark {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-text-dark);
+  letter-spacing: 0.02em;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 560px;
+  background: radial-gradient(circle at 80% 60%, #8a4a22 0%, #2b160a 70%);
+  border-radius: 24px;
+  padding: 3rem 3rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.login-card__title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-cream);
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.login-card__input {
+  width: 100%;
+  background: var(--color-bg-cream);
+  border: 1px solid var(--color-gold);
+  border-radius: 999px;
+  padding: 0.95rem 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--color-text-dark);
+  margin-bottom: 1rem;
+}
+
+.login-card__input::placeholder {
+  color: #8a7c6f;
+}
+
+.login-card__error {
+  color: #ffb4a8;
+  font-size: 0.85rem;
+  margin: -0.4rem 0 0.9rem;
+  text-align: center;
+}
+
+.login-card__button {
+  width: 100%;
+  background: var(--color-gold);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.95rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.login-card__button:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.login-card__button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.login-card__help {
+  text-align: center;
+  color: rgba(246, 237, 225, 0.75);
+  font-size: 0.95rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.login-card__divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.login-card__divider span {
+  flex: 1;
+  height: 1px;
+  background: rgba(246, 237, 225, 0.4);
+}
+
+.login-card__divider em {
+  font-style: normal;
+  color: rgba(246, 237, 225, 0.85);
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  .login-card {
+    padding: 2.25rem 1.5rem 2.5rem;
+  }
+  .login-page__topbar {
+    margin-bottom: 2rem;
+  }
+}

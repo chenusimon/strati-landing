@@ -1,0 +1,106 @@
+.comprar-cafe {
+  background: var(--color-bg-cream);
+  padding-top: var(--header-height);
+}
+
+.comprar-cafe__banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #1c120a;
+}
+
+.comprar-cafe__banner img,
+.comprar-cafe__banner video {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.comprar-cafe__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.comprar-cafe__play:hover {
+  background: #fff;
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.comprar-cafe__promo {
+  max-width: 1040px;
+  margin: 2.5rem auto;
+  padding: 2rem 2rem 2.25rem;
+  background: linear-gradient(135deg, #2b160a 0%, #7a4c2b 100%);
+  border-radius: 20px;
+}
+
+.comprar-cafe__promo h2 {
+  text-align: center;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  color: var(--color-text-cream);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  margin: 0 0 1.75rem;
+}
+
+.comprar-cafe__promo-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.comprar-cafe__promo-body img {
+  width: 100%;
+  border-radius: 10px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #fff;
+}
+
+.comprar-cafe__promo-text p {
+  color: var(--color-text-cream);
+  opacity: 0.9;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.comprar-cafe__promo-cta {
+  display: inline-flex;
+  background: var(--color-badge-cream);
+  color: var(--color-text-dark);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  padding: 0.75rem 1.9rem;
+  border-radius: 999px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.comprar-cafe__promo-cta:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 720px) {
+  .comprar-cafe__promo-body {
+    grid-template-columns: 1fr;
+  }
+  .comprar-cafe__promo {
+    padding: 1.5rem 1.25rem 1.75rem;
+    margin: 2rem auto;
+  }
+}

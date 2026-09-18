@@ -1,0 +1,5 @@
+Poné acá el archivo de video de la sección Café con el nombre exacto:
+
+cafe.mp4
+
+Ver instrucciones completas en el README.md del proyecto.

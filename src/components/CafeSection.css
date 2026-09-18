@@ -1,0 +1,99 @@
+.cafe {
+  position: relative;
+  background: var(--color-bg-cream);
+  padding: 1rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-margin-top: var(--header-height);
+}
+
+.cafe__panel {
+  width: 100%;
+  max-width: 1040px;
+  background: linear-gradient(135deg, #2b160a 0%, #7a4c2b 100%);
+  border-radius: 20px;
+  padding: 1.75rem 1.75rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cafe__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  color: var(--color-text-cream);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 1.25rem;
+  text-align: center;
+}
+
+.cafe__media {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #1c120a;
+  width: 100%;
+  max-width: 900px;
+}
+
+.cafe__media img,
+.cafe__video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.cafe__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cafe__play:hover {
+  background: #fff;
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.cafe__cta {
+  margin-top: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-badge-cream);
+  color: var(--color-text-dark);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  padding: 0.85rem 2.4rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.cafe__cta:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .cafe__panel {
+    padding: 1.5rem 1rem 1.75rem;
+  }
+  .cafe__play {
+    width: 58px;
+    height: 58px;
+  }
+}
