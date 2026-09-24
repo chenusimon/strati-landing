@@ -1,0 +1,80 @@
+.cafetera {
+  background: var(--color-bg-cream);
+  padding: 3.5rem 2rem 3.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.cafetera__panel {
+  width: 100%;
+  max-width: 1180px;
+  background: linear-gradient(120deg, #3a1706 0%, #3a1706 38%, #a25a34 100%);
+  border-radius: 14px;
+  padding: 0.9rem 2rem 2.2rem;
+}
+
+.cafetera__title {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-bg-cream);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.02em;
+  font-size: clamp(1.5rem, 3.6vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 1.1rem;
+}
+
+.cafetera__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 2.4rem;
+  align-items: center;
+}
+
+.cafetera__img {
+  width: 100%;
+  aspect-ratio: 1470 / 1070;
+  object-fit: cover;
+  background: #f1f1f1;
+  border-radius: 0;
+  display: block;
+}
+
+.cafetera__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.2rem;
+}
+
+.cafetera__text p {
+  margin: 0;
+  color: var(--color-bg-cream);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.55vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.cafetera__cta {
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+  padding: 1rem 1.8rem;
+  border-radius: 999px;
+}
+
+@media (max-width: 760px) {
+  .cafetera {
+    padding: 2.5rem 1.25rem 2.5rem;
+  }
+  .cafetera__panel {
+    padding: 0.8rem 1.1rem 1.6rem;
+  }
+  .cafetera__body {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .cafetera__text {
+    gap: 1.4rem;
+  }
+}

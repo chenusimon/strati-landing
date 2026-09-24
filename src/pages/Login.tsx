@@ -17,6 +17,14 @@ export default function Login() {
       }
     setError('');
     store.login(email.trim());
+
+    // Si el usuario venía de tocar "Comprar ahora", retomamos la compra pendiente.
+    const pending = sessionStorage.getItem('strati_pending_purchase');
+    if (pending) {
+      sessionStorage.removeItem('strati_pending_purchase');
+      navigate('/producto/' + pending + '?comprar=1');
+      return;
+    }
     navigate('/cuenta');
   }
 

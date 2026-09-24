@@ -1,46 +1,17 @@
 import logo from '../assets/images/logo.svg';
+import instagramIcon from '../assets/images/social/instagram.png';
+import youtubeIcon from '../assets/images/social/youtube.png';
+import xIcon from '../assets/images/social/x.png';
 import './Footer.css';
 
 const MAP_QUERY = 'Cafeter%C3%ADa%20Strati';
 const MAP_EMBED_SRC = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 
+// Cada ícono lleva a la página principal de la red social.
 const SOCIAL_LINKS = [
-  {
-    name: 'Instagram',
-    href: 'https://instagram.com',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    name: 'YouTube',
-    href: 'https://youtube.com',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M10.5 9.2v5.6l5-2.8-5-2.8Z" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Facebook',
-    href: 'https://facebook.com',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-        <path
-          d="M13.5 21v-6.5h2.2l.3-2.6h-2.5V10.2c0-.75.2-1.26 1.28-1.26h1.37V6.6c-.24-.03-1.05-.1-2-.1-1.98 0-3.33 1.2-3.33 3.42v1.9H8.5v2.6h2.27V21"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
+  { name: 'Instagram', href: 'https://www.instagram.com/', icon: instagramIcon },
+  { name: 'YouTube', href: 'https://www.youtube.com/', icon: youtubeIcon },
+  { name: 'X', href: 'https://x.com/', icon: xIcon },
 ];
 
 export default function Footer() {
@@ -55,11 +26,11 @@ export default function Footer() {
                 key={social.name}
                 href={social.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="footer__social-btn"
                 aria-label={social.name}
               >
-                {social.icon}
+                <img src={social.icon} alt="" />
               </a>
             ))}
           </div>
@@ -76,10 +47,6 @@ export default function Footer() {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-      </div>
-
-      <div className="footer__bottom">
-        <p>&copy; {new Date().getFullYear()} Strati Café. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

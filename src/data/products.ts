@@ -1,12 +1,15 @@
 import arandano from '../assets/images/sabor-arandano.jpg';
 import frambuesa from '../assets/images/sabor-frambuesa.jpg';
 import limon from '../assets/images/sabor-limon.jpg';
-import pistacho from '../assets/images/sabor-pistacho.jpg';
-import bagArabica from '../assets/images/products/bag-arabica.jpg';
-import bagEspresso from '../assets/images/products/bag-espresso.jpg';
+// Foto cuadrada del tiramisú (carta, detalle, similares, carrito). El carrusel usa su propia foto horizontal.
+import pistacho from '../assets/images/sabor-pistacho-carta.jpg';
+import bagArabica from '../assets/images/products/bag-studio-clean.jpg';
+import bagEspresso from '../assets/images/products/bag-studio-clean.jpg';
 import bagEspressoStudio from '../assets/images/products/bag-espresso-studio.jpg';
 import bagOriginStudio from '../assets/images/products/bag-origin-studio.jpg';
-import cafeteraItaliana from '../assets/images/products/cafetera-italiana.jpg';
+import cafeteraItaliana from '../assets/images/products/cafetera-marron.jpg';
+import cafeteraRoja from '../assets/images/products/cafetera-roja.jpg';
+import cafeteraDorada from '../assets/images/products/cafetera-dorada.jpg';
 import mugs from '../assets/images/products/mugs.jpg';
 import spoons from '../assets/images/products/spoons.jpg';
 import travelMugs from '../assets/images/products/travel_mugs.jpg';
@@ -18,6 +21,8 @@ export type ProductCategory = 'tiramisu' | 'cafe' | 'cafetera' | 'merch';
 export interface ProductColor {
   name: string;
   hex: string;
+  /** Foto del producto en este color (si no tiene, se mantiene la foto principal). */
+  image?: string;
 }
 
 export interface Product {
@@ -116,9 +121,9 @@ export const products: Product[] = [
     tagline: 'La clásica cafetera moka, ahora en edición Strati.',
     characteristics: 'Aluminio de alta resistencia, apta para todo tipo de cocinas. Disponible en 3 colores.',
     colors: [
-      { name: 'Café Obsidian', hex: '#3a2417' },
-      { name: 'Rojo Strati', hex: '#b3261e' },
-      { name: 'Golden Bean', hex: '#cdac79' },
+      { name: 'Café Obsidian', hex: '#3a1706', image: cafeteraItaliana },
+      { name: 'Rojo Strati', hex: '#ff0000', image: cafeteraRoja },
+      { name: 'Golden Bean', hex: '#c9a065', image: cafeteraDorada },
     ],
   },
 
@@ -173,8 +178,10 @@ export function getProductsByCategory(category: ProductCategory): Product[] {
 }
 
 export function getSimilarProducts(product: Product, count = 3): Product[] {
-  const sameCategory = products.filter((p) => p.category === product.category && p.id !== product.id);
-  if (sameCategory.length >= count) return sameCategory.slice(0, count);
-  const rest = products.filter((p) => p.category !== product.category && p.id !== product.id);
+  // Mismo grupo primero y en el orden del catálogo (destacados antes que el resto).
+  const sameCategory = products
+    .filter((p) => p.category === product.category)
+    .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const rest = products.filter((p) => p.category !== product.category);
   return [...sameCategory, ...rest].slice(0, count);
 }

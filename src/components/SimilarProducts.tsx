@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Product } from '../data/products';
-import ProductCard from './ProductCard';
+import { Link } from 'react-router-dom';
 import './SimilarProducts.css';
 
 interface SimilarProductsProps {
@@ -12,7 +12,10 @@ const VISIBLE = 3;
 export default function SimilarProducts({ products }: SimilarProductsProps) {
   const [start, setStart] = useState(0);
   const canScroll = products.length > VISIBLE;
-  const visible = canScroll ? products.slice(start, start + VISIBLE) : products;
+  // Ventana circular: siempre se muestran 3 tarjetas, dando la vuelta al llegar al final.
+  const visible = canScroll
+    ? Array.from({ length: VISIBLE }, (_, i) => products[(start + i) % products.length])
+    : products;
 
   const goPrev = () => setStart((s) => (s - 1 + products.length) % products.length);
   const goNext = () => setStart((s) => (s + 1) % products.length);
@@ -33,9 +36,14 @@ export default function SimilarProducts({ products }: SimilarProductsProps) {
           )}
           <div className="similar__grid">
             {visible.map((product) => (
-              <div className="similar__card" key={product.id}>
-                <ProductCard product={product} variant="light" />
-              </div>
+              <Link
+                to={`/producto/${product.id}`}
+                className="similar__card"
+                key={product.id}
+                aria-label={`Ver ${product.name}`}
+              >
+                <img src={product.image} alt={product.name} loading="lazy" />
+              </Link>
             ))}
           </div>
           {canScroll && (

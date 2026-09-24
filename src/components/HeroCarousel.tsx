@@ -44,8 +44,6 @@ export default function HeroCarousel() {
     setIndex(((next % SLIDES.length) + SLIDES.length) % SLIDES.length);
   }, []);
 
-  const goNext = useCallback(() => goTo(index + 1), [goTo, index]);
-  const goPrev = useCallback(() => goTo(index - 1), [goTo, index]);
 
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -56,11 +54,6 @@ export default function HeroCarousel() {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [index]);
-
-  const handleArrowClick = (dir: 'prev' | 'next') => {
-    if (dir === 'next') goNext();
-    else goPrev();
-  };
 
   return (
     <section className="hero" aria-roledescription="carousel" aria-label="Destacados">
@@ -73,40 +66,18 @@ export default function HeroCarousel() {
           aria-label={slide.alt}
           aria-hidden={i !== index}
         >
-          <div className="hero__overlay" />
           <div className={`hero__content hero__content--${slide.ctaPosition}`}>
             {slide.badge && (
               <div className="hero__badge">
                 <span>{slide.badge}</span>
               </div>
             )}
-            <Link to={slide.ctaTo} className="hero__cta">
+            <Link to={slide.ctaTo} className="hero__cta btn-gold">
               {slide.ctaLabel}
             </Link>
           </div>
         </div>
       ))}
-
-      <button
-        type="button"
-        className="hero__arrow hero__arrow--prev"
-        aria-label="Anterior"
-        onClick={() => handleArrowClick('prev')}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M15 5 8 12l7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        className="hero__arrow hero__arrow--next"
-        aria-label="Siguiente"
-        onClick={() => handleArrowClick('next')}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
 
       <div className="hero__dots" role="tablist" aria-label="Seleccionar slide">
         {SLIDES.map((slide, i) => (

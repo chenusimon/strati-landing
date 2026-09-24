@@ -1,22 +1,23 @@
 .product-grid-section {
-  padding: 2.5rem 2rem;
-  max-width: 1200px;
+  padding: 3.25rem 1.5rem 3rem;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
 .product-grid-section__title {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: clamp(1.05rem, 2.6vw, 1.85rem);
+  font-weight: 700;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   margin: 0 0 2rem;
-  color: var(--color-text-dark);
+  color: #000;
 }
 
 .product-grid {
   display: grid;
-  gap: 2rem 1.75rem;
+  gap: 2rem 2.4rem;
 }
 
 .product-grid-section--cols-3 .product-grid {
@@ -52,4 +53,10 @@
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem 1rem;
   }
+}
+
+/* Grilla de 5 (café / merch): fotos de estudio verticales, como en la referencia */
+.product-grid-section--cols-5 .product-card__image {
+  aspect-ratio: 2 / 3;
+  background: #ececec;
 }
