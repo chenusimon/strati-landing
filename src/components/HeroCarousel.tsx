@@ -47,8 +47,6 @@ export default function HeroCarousel() {
   const goNext = useCallback(() => goTo(index + 1), [goTo, index]);
   const goPrev = useCallback(() => goTo(index - 1), [goTo, index]);
 
-  // Autoplay: rotate every 5s, restarting the timer whenever the slide
-  // changes (including manual changes via the arrow buttons).
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {

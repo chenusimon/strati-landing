@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import cafeImg from '../assets/images/cafe-hero.jpg';
 import './CafeSection.css';
 
-// Put the real video file at:  public/videos/cafe.mp4
-// (served as-is by Vite; see the README for details). Until that file
-// exists, pressing play will just show a browser video error.
 const VIDEO_SRC = '/videos/cafe.mp4';
 
 export default function CafeSection() {
@@ -15,9 +12,7 @@ export default function CafeSection() {
   const handlePlay = () => {
     setPlaying(true);
     requestAnimationFrame(() => {
-      videoRef.current?.play().catch(() => {
-        /* autoplay blocked or file missing — controls are still shown */
-      });
+      videoRef.current?.play().catch(() => {});
     });
   };
 

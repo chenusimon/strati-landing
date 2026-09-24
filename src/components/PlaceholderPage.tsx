@@ -6,9 +6,6 @@ interface PlaceholderPageProps {
   subtitle?: string;
 }
 
-// Generic empty page. All the "Comprar ahora" / nav buttons that don't have
-// real content yet land here with a different title. Build out the real
-// page content in the specific route file when it's ready.
 export default function PlaceholderPage({ title, subtitle }: PlaceholderPageProps) {
   return (
     <div className="placeholder">

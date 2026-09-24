@@ -1,45 +1,37 @@
-import { useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../context/StoreContext';
 import logo from '../assets/images/logo.svg';
 import './Login.css';
 
 export default function Login() {
-  const { login } = useStore();
+  const store = useStore();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  // No hay contraseña: con solo poner el mail, "Siguiente" y "Crear cuenta"
-  // hacen exactamente lo mismo (buscan o crean el usuario en el servidor).
-  async function submitEmail() {
-    if (!email.trim()) {
-      setError('Ingresá tu correo electrónico');
-      return;
-    }
+  function doLogin() {
+      if (email.trim() == '') {
+        setError('Ingresá tu correo electrónico');
+        return;
+      }
     setError('');
-    setLoading(true);
-    try {
-      await login(email.trim());
-      navigate('/cuenta');
-    } catch {
-      setError('No se pudo iniciar sesión. Intentá de nuevo.');
-    } finally {
-      setLoading(false);
-    }
+    store.login(email.trim());
+    navigate('/cuenta');
   }
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: any) {
     e.preventDefault();
-    submitEmail();
+    doLogin();
   }
 
   return (
     <div className="login-page">
       <div className="login-page__topbar">
-        <img src={logo} alt="Strati" className="login-page__logo" />
-        <span className="login-page__wordmark">TRATI</span>
+        <Link to="/" className="login-page__brand">
+          <img src={logo} alt="Strati" className="login-page__logo" />
+          <span className="login-page__wordmark">TRATI</span>
+        </Link>
       </div>
 
       <div className="login-card">
@@ -56,20 +48,20 @@ export default function Login() {
 
           {error && <p className="login-card__error">{error}</p>}
 
-          <button type="submit" className="login-card__button" disabled={loading}>
-            {loading ? 'Cargando...' : 'Siguiente'}
+          <button type="submit" className="login-card__button">
+            Siguiente
           </button>
         </form>
 
         <p className="login-card__help">¿Tenés problemas para iniciar sesión?</p>
 
         <div className="login-card__divider">
-          <span />
+          <span></span>
           <em>O</em>
-          <span />
+          <span></span>
         </div>
 
-        <button type="button" className="login-card__button" disabled={loading} onClick={submitEmail}>
+        <button type="button" className="login-card__button" onClick={doLogin}>
           Crear cuenta
         </button>
       </div>

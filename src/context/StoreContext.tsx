@@ -1,13 +1,10 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
-// ---- Tipos de datos ----
-// Guardamos qué producto y cuántas unidades hay en el carrito.
 export interface CartItem {
   productId: string;
   qty: number;
 }
 
-// Un pedido ya confirmado (lo que antes era el carrito, con fecha).
 export interface Order {
   id: string;
   date: string;
@@ -18,122 +15,120 @@ interface StoreContextValue {
   email: string | null;
   cart: CartItem[];
   orders: Order[];
-  loading: boolean;
-  login: (email: string) => Promise<void>;
+  login: (val: string) => void;
   logout: () => void;
-  addToCart: (productId: string) => Promise<void>;
-  removeFromCart: (productId: string) => Promise<void>;
-  checkout: () => Promise<void>;
+  addToCart: (id: string) => void;
+  removeFromCart: (id: string) => void;
+  checkout: () => void;
 }
 
 const StoreContext = createContext<StoreContextValue | null>(null);
 
-// Clave que usamos en localStorage solo para recordar "quién está
-// logueado" entre recargas de página. El carrito y los pedidos en sí
-// viven en el servidor (Vercel KV), no acá.
-const SESSION_KEY = 'strati_email';
+function loadData(mail: string) {
+  const raw = localStorage.getItem('strati_data_' + mail);
+  if (raw) {
+    return JSON.parse(raw);
+  }
+  return { cart: [], orders: [] };
+}
+
+function saveData(mail: string, data: any) {
+  localStorage.setItem('strati_data_' + mail, JSON.stringify(data));
+}
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [email, setEmail] = useState<string | null>(null);
+  const [email, set_email] = useState<string | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [orders, SetOrders] = useState<Order[]>([]);
 
-  // Al cargar la página, si ya había una sesión guardada, la restauramos
-  // pidiéndole los datos al servidor de nuevo (login es "crear o buscar",
-  // así que llamarlo de nuevo acá es seguro).
   useEffect(() => {
-    const savedEmail = localStorage.getItem(SESSION_KEY);
-    if (savedEmail) {
-      login(savedEmail).catch(() => {
-        /* si falla (por ejemplo sin conexión al backend), seguimos deslogueados */
-      });
+    const saved = localStorage.getItem('strati_email');
+    if (saved) {
+      set_email(saved);
+      const d = loadData(saved);
+      setCart(d.cart);
+      SetOrders(d.orders);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function login(newEmail: string) {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: newEmail }),
-      });
-      if (!res.ok) throw new Error('No se pudo iniciar sesión');
-      const data = await res.json();
-      setEmail(data.email);
-      setCart(data.cart || []);
-      setOrders(data.orders || []);
-      localStorage.setItem(SESSION_KEY, data.email);
-    } finally {
-      setLoading(false);
-    }
+  function login(val: string) {
+    set_email(val);
+    localStorage.setItem('strati_email', val);
+    const d = loadData(val);
+    setCart(d.cart);
+    SetOrders(d.orders);
   }
 
   function logout() {
-    setEmail(null);
+    set_email(null);
     setCart([]);
-    setOrders([]);
-    localStorage.removeItem(SESSION_KEY);
+    SetOrders([]);
+    localStorage.removeItem('strati_email');
   }
 
-  // Guarda el carrito actualizado en el servidor.
-  async function saveCart(newCart: CartItem[]) {
-    setCart(newCart); // actualizamos la pantalla al toque
-    if (!email) return;
-    await fetch('/api/cart', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, cart: newCart }),
-    });
+  function persist(newCart: CartItem[], newOrders: Order[]) {
+    if (email == null) return;
+    saveData(email, { cart: newCart, orders: newOrders });
   }
 
-  async function addToCart(productId: string) {
-    const existing = cart.find((item) => item.productId === productId);
-    const newCart = existing
-      ? cart.map((item) => (item.productId === productId ? { ...item, qty: item.qty + 1 } : item))
-      : [...cart, { productId, qty: 1 }];
-    await saveCart(newCart);
+  function addToCart(id: string) {
+    let found = false;
+    let i = 0;
+    const newCart = [];
+    while (i < cart.length) {
+      if (cart[i].productId == id) {
+        newCart.push({ productId: cart[i].productId, qty: cart[i].qty + 1 });
+        found = true;
+      } else {
+        newCart.push(cart[i]);
+      }
+      i = i + 1;
+    }
+    if (found == false) {
+      newCart.push({ productId: id, qty: 1 });
+    }
+    setCart(newCart);
+    persist(newCart, orders);
   }
 
-  async function removeFromCart(productId: string) {
-    const newCart = cart.filter((item) => item.productId !== productId);
-    await saveCart(newCart);
+  function removeFromCart(id: string) {
+    const newCart = [];
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].productId != id) newCart.push(cart[i]);
+    }
+    setCart(newCart);
+    persist(newCart, orders);
   }
 
-  async function checkout() {
-    if (!email) return;
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-    if (!res.ok) throw new Error('No se pudo confirmar la compra');
-    const data = await res.json();
-    setCart(data.cart || []);
-    setOrders(data.orders || []);
+  function checkout() {
+    if (cart.length == 0) return;
+    const order = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      items: cart,
+    };
+    const newOrders = [order, ...orders];
+    SetOrders(newOrders);
+    setCart([]);
+    persist([], newOrders);
   }
 
-  const value: StoreContextValue = {
-    email,
-    cart,
-    orders,
-    loading,
-    login,
-    logout,
-    addToCart,
-    removeFromCart,
-    checkout,
+  const value = {
+    email: email,
+    cart: cart,
+    orders: orders,
+    login: login,
+    logout: logout,
+    addToCart: addToCart,
+    removeFromCart: removeFromCart,
+    checkout: checkout,
   };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }
 
-// Hook para usar el contexto desde cualquier componente:
-//   const { email, cart, addToCart } = useStore();
 export function useStore() {
   const ctx = useContext(StoreContext);
-  if (!ctx) throw new Error('useStore debe usarse dentro de <StoreProvider>');
+  if (!ctx) throw new Error('no context');
   return ctx;
 }

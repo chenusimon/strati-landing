@@ -29,16 +29,10 @@ export interface Product {
   tagline: string;
   characteristics: string;
   colors?: ProductColor[];
-  /** Shown in the Home page teaser grid, before the flavor is "featured" */
   featured?: boolean;
 }
 
-// To add a new product later: drop its image in src/assets/images (or
-// src/assets/images/products) and add an entry here. Everything else —
-// cards, grids, the product detail page and the "similares" carousel — is
-// generated automatically from this list.
 export const products: Product[] = [
-  // ---- Tiramisú ----
   {
     id: 'arandano',
     name: 'BlueBerry Tiramisú',
@@ -76,7 +70,6 @@ export const products: Product[] = [
     featured: false,
   },
 
-  // ---- Café ----
   {
     id: 'arabica-select',
     name: 'Café Arabica Select',
@@ -114,7 +107,6 @@ export const products: Product[] = [
     characteristics: 'Tueste claro con infusión natural de vainilla, ideal para tomar con leche.',
   },
 
-  // ---- Cafeteras ----
   {
     id: 'cafetera-italiana',
     name: 'Cafetera Italiana',
@@ -130,7 +122,6 @@ export const products: Product[] = [
     ],
   },
 
-  // ---- Merch ----
   {
     id: 'mugs-ceramica',
     name: 'Mugs de Cerámica Strati',

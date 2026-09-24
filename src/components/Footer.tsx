@@ -1,11 +1,6 @@
 import logo from '../assets/images/logo.svg';
 import './Footer.css';
 
-// No API key required for this basic embed (Google Maps "no-key" embed via
-// the /maps?output=embed endpoint). If you have a Google Maps Embed API key
-// and want richer styling/markers, swap MAP_EMBED_SRC for:
-//   https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=<address or lat,lng>
-// See the README in this project for step-by-step instructions.
 const MAP_QUERY = 'Cafeter%C3%ADa%20Strati';
 const MAP_EMBED_SRC = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 

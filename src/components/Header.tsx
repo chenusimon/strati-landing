@@ -18,13 +18,10 @@ export default function Header() {
       const delta = currentY - lastScrollY.current;
 
       if (currentY < 60) {
-        // Always show the header near the top of the page.
         setHidden(false);
       } else if (delta > 6) {
-        // Scrolling down -> hide.
         setHidden(true);
       } else if (delta < -6) {
-        // Scrolling up -> show right away, no need to reach the top.
         setHidden(false);
       }
 

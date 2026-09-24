@@ -11,8 +11,6 @@ import Login from './pages/Login';
 import Cart from './pages/Cart';
 import Account from './pages/Account';
 
-// La página de login tiene su propia barra superior (logo + wordmark), así
-// que ahí no mostramos el Header con el menú de navegación.
 function SiteHeader() {
   const location = useLocation();
   if (location.pathname === '/login') return null;

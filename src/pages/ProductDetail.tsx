@@ -17,14 +17,12 @@ export default function ProductDetail() {
 
   const similar = getSimilarProducts(product);
 
-  // Si no hay sesión iniciada, mandamos primero a /login. Una vez logueado,
-  // el producto se agrega al carrito y vamos directo a verlo.
-  async function handleComprar() {
+  function handleComprar() {
     if (!email) {
       navigate('/login');
       return;
     }
-    await addToCart(product!.id);
+    addToCart(product!.id);
     navigate('/carrito');
   }
 

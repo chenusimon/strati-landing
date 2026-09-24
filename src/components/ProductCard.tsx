@@ -4,7 +4,6 @@ import './ProductCard.css';
 
 interface ProductCardProps {
   product: Product;
-  /** Use "light" text when the card sits on a dark background (e.g. the similar-products panel) */
   variant?: 'dark' | 'light';
 }
 

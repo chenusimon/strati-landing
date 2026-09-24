@@ -7,7 +7,6 @@ import './Cart.css';
 export default function Cart() {
   const { email, cart, removeFromCart, checkout } = useStore();
   const navigate = useNavigate();
-  const [confirming, setConfirming] = useState(false);
   const [message, setMessage] = useState('');
 
   if (!email) {
@@ -21,17 +20,9 @@ export default function Cart() {
     );
   }
 
-  async function handleConfirm() {
-    setConfirming(true);
-    setMessage('');
-    try {
-      await checkout();
-      setMessage('¡Compra confirmada! La agregamos a tu historial de pedidos.');
-    } catch {
-      setMessage('No pudimos confirmar la compra.');
-    } finally {
-      setConfirming(false);
-    }
+  function handleConfirm() {
+    checkout();
+    setMessage('Compra confirmada! la agregamos a tu historial de pedidos.');
   }
 
   return (
@@ -62,8 +53,8 @@ export default function Cart() {
       )}
 
       {cart.length > 0 && (
-        <button type="button" className="cart-page__confirm" onClick={handleConfirm} disabled={confirming}>
-          {confirming ? 'Confirmando...' : 'Confirmar compra'}
+        <button type="button" className="cart-page__confirm" onClick={handleConfirm}>
+          Confirmar compra
         </button>
       )}
 
